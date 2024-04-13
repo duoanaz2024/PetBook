@@ -7,7 +7,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 @Entity(tableName = "countries")
-data class Country(
+data class Pet(
     @PrimaryKey
     val commonName: String,
     val mainCapital: String,

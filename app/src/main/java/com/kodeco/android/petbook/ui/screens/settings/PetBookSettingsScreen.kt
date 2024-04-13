@@ -24,8 +24,6 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,16 +31,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewModelScope
-import com.kodeco.android.petbook.BuildConfig
-import com.kodeco.android.petbook.ui.screens.petinfo.CountryInfoViewModel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CountryAppSettingsScreen(
-    viewModel: CountryAppSettingsViewModel,
+fun PetBookSettingsScreen(
+    viewModel: PetBookSettingsViewModel,
     onClick: () -> Unit) {
 
     var toggleFav = viewModel.getFavoritesFeatureEnabled().collectAsState(initial = false).value

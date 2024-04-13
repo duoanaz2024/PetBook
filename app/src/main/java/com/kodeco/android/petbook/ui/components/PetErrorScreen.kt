@@ -1,6 +1,5 @@
 package com.kodeco.android.petbook.ui.components
 
-import android.app.Activity
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,12 +16,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun CountryErrorScreen(headline: String, subtitle: String, onClick: () -> Unit) {
+fun PetErrorScreen(headline: String, subtitle: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()

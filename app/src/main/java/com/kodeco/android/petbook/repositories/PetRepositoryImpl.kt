@@ -1,10 +1,9 @@
 package com.kodeco.android.petbook.repositories
 
-import android.util.Log
-import com.kodeco.android.petbook.model.Country
+import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.networking.RemoteApiService
-import com.kodeco.android.petbook.networking.dao.CountryDao
-import com.kodeco.android.petbook.networking.preferences.CountryPrefs
+import com.kodeco.android.petbook.networking.dao.PetDao
+import com.kodeco.android.petbook.networking.preferences.PetPrefs
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -14,16 +13,16 @@ import kotlinx.coroutines.flow.take
 object DataManager {
 
     var favorites = setOf<String>()
-    val countries: MutableStateFlow<List<Country>> = MutableStateFlow(emptyList())
+    val pets: MutableStateFlow<List<Pet>> = MutableStateFlow(emptyList())
 
 }
 
-class CountryRepositoryImpl(private val apiService: RemoteApiService,
-                            private val dao: CountryDao,private val prefs: CountryPrefs) : CountryRepository {
+class PetRepositoryImpl(private val apiService: RemoteApiService,
+                            private val dao: PetDao, private val prefs: PetPrefs) : PetRepository {
 
-    override val countries: StateFlow<List<Country>> = DataManager.countries.asStateFlow()
+    override val pets: StateFlow<List<Pet>> = DataManager.pets.asStateFlow()
 
-    override suspend fun fetchCountries() {
+    override suspend fun fetchPets() {
 
         try{
             val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
@@ -34,18 +33,18 @@ class CountryRepositoryImpl(private val apiService: RemoteApiService,
                 favorites = dao.getFavorites(true)
                 // DataManager.favorites = favorites.toSet()
             }
-            DataManager.countries.value = try {
+            DataManager.pets.value = try {
                 val response = apiService.getCountries()
                 if (response.isSuccessful) {
-                    val countryList = response.body()!!
+                    val petList = response.body()!!
                         .toMutableList()
-                        .map { country ->
-                            country.copy(isFavorite = favorites.contains(country.commonName))
+                        .map { pet ->
+                            pet.copy(isFavorite = favorites.contains(pet.commonName))
                         }
                     if (cacheEnabled){
-                        dao.insertCountries(countryList)
+                        dao.insertCountries(petList)
                     }
-                    countryList
+                    petList
                 } else {
                     if (cacheEnabled && dao.getCountries().isNotEmpty()){
                         dao.getCountries()
@@ -70,39 +69,39 @@ class CountryRepositoryImpl(private val apiService: RemoteApiService,
 
     }
 
-    override fun getCountry(index: Int): Country? {
-        return DataManager.countries.value.getOrNull(index)
+    override fun getPet(index: Int): Pet? {
+        return DataManager.pets.value.getOrNull(index)
     }
 
-    override suspend fun favorite(country: Country) {
+    override suspend fun favorite(pet: Pet) {
         val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
         if (cacheEnabled){
             if (dao.getCountries().isEmpty()){
-                dao.insertCountries(DataManager.countries.value)
+                dao.insertCountries(DataManager.pets.value)
             }
         }
         val favorites: List<String> = if (cacheEnabled){
             dao.getFavorites(true)
         } else {
             val mutableList = DataManager.favorites.toMutableList()
-            if (mutableList.contains(country.commonName)){
-                mutableList.remove(country.commonName)
+            if (mutableList.contains(pet.commonName)){
+                mutableList.remove(pet.commonName)
             }
             else{
-                mutableList.add(country.commonName)
+                mutableList.add(pet.commonName)
             }
             DataManager.favorites = mutableList.toSet()
             mutableList
         }
-        var isFavorite = favorites.contains(country.commonName)
+        var isFavorite = favorites.contains(pet.commonName)
         if (cacheEnabled){
             isFavorite = !isFavorite
-            dao.updateCountry(country.copy(isFavorite = isFavorite))
+            dao.updateCountry(pet.copy(isFavorite = isFavorite))
         }
 
-        val index = DataManager.countries.value.indexOf(country)
-        val mutableCountries = DataManager.countries.value.toMutableList()
+        val index = DataManager.pets.value.indexOf(pet)
+        val mutableCountries = DataManager.pets.value.toMutableList()
         mutableCountries[index] = mutableCountries[index].copy(isFavorite = isFavorite)
-        DataManager.countries.value = mutableCountries.toList()
+        DataManager.pets.value = mutableCountries.toList()
     }
 }

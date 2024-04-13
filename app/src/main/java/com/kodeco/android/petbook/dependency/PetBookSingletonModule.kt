@@ -2,15 +2,14 @@ package com.kodeco.android.petbook.dependency
 
 import android.content.Context
 import com.kodeco.android.petbook.networking.BASE_URL
-import com.kodeco.android.petbook.networking.database.CountryDatabase
+import com.kodeco.android.petbook.networking.database.PetDatabase
 import com.kodeco.android.petbook.networking.RemoteApiService
 import com.kodeco.android.petbook.networking.adapters.CountryAdapter
 import com.kodeco.android.petbook.networking.buildClient
-import com.kodeco.android.petbook.networking.dao.CountryDao
-import com.kodeco.android.petbook.networking.preferences.CountryPrefs
-import com.kodeco.android.petbook.networking.preferences.CountryPrefsImpl
-import com.kodeco.android.petbook.repositories.CountryRepository
-import com.kodeco.android.petbook.repositories.CountryRepositoryImpl
+import com.kodeco.android.petbook.networking.preferences.PetPrefs
+import com.kodeco.android.petbook.networking.preferences.PetPrefsImpl
+import com.kodeco.android.petbook.repositories.PetRepository
+import com.kodeco.android.petbook.repositories.PetRepositoryImpl
 import com.squareup.moshi.Moshi
 import dagger.Module
 import dagger.Provides
@@ -23,7 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class CountryInfoSingletonModule {
+class PetBookSingletonModule {
     @Provides
     @Singleton
     fun providesCountryService(): RemoteApiService {
@@ -41,22 +40,22 @@ class CountryInfoSingletonModule {
 
     @Provides
     @Singleton
-    fun providesCountryDatabase(@ApplicationContext applicationContext: Context): CountryDatabase {
-        return CountryDatabase.buildDatabase(applicationContext)
+    fun providesCountryDatabase(@ApplicationContext applicationContext: Context): PetDatabase {
+        return PetDatabase.buildDatabase(applicationContext)
     }
 
     @Provides
     @Singleton
     fun providesCountryPrefsImpl(@ApplicationContext applicationContext: Context
-    ): CountryPrefs = CountryPrefsImpl(applicationContext)
+    ): PetPrefs = PetPrefsImpl(applicationContext)
 
     @Provides
     @Singleton
     fun providesCountryRepository(
         service: RemoteApiService,
-        database: CountryDatabase,
-        prefs: CountryPrefs
-    ): CountryRepository = CountryRepositoryImpl(service, database.countryDao(), prefs)
+        database: PetDatabase,
+        prefs: PetPrefs
+    ): PetRepository = PetRepositoryImpl(service, database.petDao(), prefs)
 
 
 }

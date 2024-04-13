@@ -9,32 +9,32 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.kodeco.android.petbook.ui.screens.about.CountryAppAboutScreen
-import com.kodeco.android.petbook.ui.screens.petdetails.CountryDetailsScreen
-import com.kodeco.android.petbook.ui.screens.petinfo.CountryInfoScreen
-import com.kodeco.android.petbook.ui.screens.settings.CountryAppSettingsScreen
+import com.kodeco.android.petbook.ui.screens.about.PetBookAboutScreen
+import com.kodeco.android.petbook.ui.screens.petdetails.PetDetailsScreen
+import com.kodeco.android.petbook.ui.screens.petinfo.PetInfoScreen
+import com.kodeco.android.petbook.ui.screens.settings.PetBookSettingsScreen
 import com.kodeco.android.petbook.ui.screens.splash.SplashScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
-fun CountryInfoNavHost(){
+fun PetInfoNavHost(){
 
     val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "countryList"){
+    NavHost(navController = navController, startDestination = "petList"){
 
         composable(route = "splash") {
             SplashScreen(
                 onSplashEndedValid = {
-                    navController.navigate("countryList")
+                    navController.navigate("petList")
                 }
             )
         }
 
-        composable("countryList"){
-            CountryInfoScreen(
+        composable("petList"){
+            PetInfoScreen(
                 viewModel = hiltViewModel(),
-                onCountryRowTap = { countryIndex ->
-                    navController.navigate("details/$countryIndex")
+                onPetRowTap = { petIndex ->
+                    navController.navigate("details/$petIndex")
                 },
                 onSettingsTap = {
                     navController.navigate("settingsScreen")
@@ -44,13 +44,13 @@ fun CountryInfoNavHost(){
             }
         }
 
-        composable("details/{countryIndex}",
-            arguments = listOf(navArgument("countryIndex") { type = NavType.IntType})){
+        composable("details/{petIndex}",
+            arguments = listOf(navArgument("petIndex") { type = NavType.IntType})){
                 backStackEntry ->
-            val countryIndex = backStackEntry.arguments?.getInt("countryIndex") ?: 0
+            val petIndex = backStackEntry.arguments?.getInt("petIndex") ?: 0
 
-            CountryDetailsScreen(
-                countryId = countryIndex,
+            PetDetailsScreen(
+                petId = petIndex,
                 viewModel = hiltViewModel()
             ) {
                 navController.navigateUp()
@@ -59,14 +59,14 @@ fun CountryInfoNavHost(){
         }
 
         composable("aboutScreen"){
-            CountryAppAboutScreen(
+            PetBookAboutScreen(
             ){
                 navController.navigateUp()
             }
         }
 
         composable("settingsScreen"){
-            CountryAppSettingsScreen(
+            PetBookSettingsScreen(
                 viewModel = hiltViewModel()
             ){
                 navController.navigateUp()

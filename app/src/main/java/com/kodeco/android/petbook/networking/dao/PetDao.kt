@@ -6,25 +6,25 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.kodeco.android.petbook.model.Country
+import com.kodeco.android.petbook.model.Pet
 
 @Dao
-interface CountryDao {
+interface PetDao {
 
     @Query("SELECT * FROM countries")
-    suspend fun getCountries(): List<Country>
+    suspend fun getCountries(): List<Pet>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCountries(countries: List<Country>)
+    suspend fun insertCountries(countries: List<Pet>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCountry(country: Country)
+    suspend fun insertCountry(pet: Pet)
 
     @Update
-    suspend fun updateCountry(country: Country)
+    suspend fun updateCountry(pet: Pet)
 
     @Delete
-    suspend fun deleteCountry(country: Country)
+    suspend fun deleteCountry(pet: Pet)
 
     @Query("DELETE FROM countries")
     suspend fun deleteAllCountries()
@@ -33,7 +33,7 @@ interface CountryDao {
     suspend fun getFavorites(isFavorite: Boolean): List<String>
 
     @Query("SELECT * FROM countries where commonName = :commonName")
-    suspend fun getCountry(commonName: String): Country
+    suspend fun getCountry(commonName: String): Pet
 
 
 }

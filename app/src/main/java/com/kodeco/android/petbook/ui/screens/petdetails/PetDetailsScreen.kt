@@ -45,11 +45,11 @@ enum class MapState {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun CountryDetailsScreen(
-    countryId: Int,
-    viewModel: CountryDetailsViewModel,
+fun PetDetailsScreen(
+    petId: Int,
+    viewModel: PetDetailsViewModel,
     onNavigateUp: () -> Unit) {
-    val country = viewModel.getCountryDetails(countryId)
+    val country = viewModel.getPetDetails(petId)
 
     if (country != null){
         val capital: String = country.mainCapital

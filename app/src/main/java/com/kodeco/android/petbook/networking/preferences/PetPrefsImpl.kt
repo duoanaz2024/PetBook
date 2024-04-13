@@ -7,11 +7,10 @@ import androidx.datastore.preferences.preferencesDataStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onCompletion
 
-private const val STORE_NAME = "country_prefs"
+private const val STORE_NAME = "pet_prefs"
 
-class CountryPrefsImpl (private val context: Context)  : CountryPrefs {
+class PetPrefsImpl (private val context: Context)  : PetPrefs {
     private val Context.dataStore by preferencesDataStore(name = STORE_NAME)
     private val dataStore = context.dataStore
     override fun getLocalStorageEnabled(): Flow<Boolean> {

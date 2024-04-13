@@ -1,7 +1,5 @@
 package com.kodeco.android.petbook.ui.components
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,18 +20,16 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import com.kodeco.android.petbook.R
-import com.kodeco.android.petbook.model.Country
+import com.kodeco.android.petbook.model.Pet
 
 
 @Composable
-fun CountryInfoList(
+fun PetInfoList(
     favoritesEnabled: State<Boolean>,
-    countryList: List<Country>,
-    onCountryRowTap: (Any?) -> Unit,
-    onFavorite: (Country) -> Unit,
+    petList: List<Pet>,
+    onPetRowTap: (Any?) -> Unit,
+    onFavorite: (Pet) -> Unit,
     aboutTap: () -> Unit,
     onSettingsTap: () -> Unit,
     onRefreshClick: () -> Unit,
@@ -72,12 +68,12 @@ fun CountryInfoList(
         }
 
         LazyColumn {
-            items(countryList.size) { index ->
-                CountryInfoRow(
+            items(petList.size) { index ->
+                PetInfoRow(
                     favoritesEnabled=favoritesEnabled,
-                    country=countryList[index],
+                    pet=petList[index],
                     onFavorite=onFavorite) {
-                    onCountryRowTap(index)
+                    onPetRowTap(index)
                 }
             }
         }

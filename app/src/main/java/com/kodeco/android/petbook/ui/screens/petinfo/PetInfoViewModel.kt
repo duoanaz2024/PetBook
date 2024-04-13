@@ -5,10 +5,10 @@ import android.util.Log
 import androidx.annotation.RequiresExtension
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kodeco.android.petbook.model.Country
-import com.kodeco.android.petbook.networking.preferences.CountryPrefs
-import com.kodeco.android.petbook.repositories.CountryRepository
-import com.kodeco.android.petbook.util.CountryInfoState
+import com.kodeco.android.petbook.model.Pet
+import com.kodeco.android.petbook.networking.preferences.PetPrefs
+import com.kodeco.android.petbook.repositories.PetRepository
+import com.kodeco.android.petbook.util.PetBookState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -20,13 +20,13 @@ import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
-class CountryInfoViewModel @Inject constructor(
-    private val repository: CountryRepository,
-    val pref: CountryPrefs
+class PetInfoViewModel @Inject constructor(
+    private val repository: PetRepository,
+    val pref: PetPrefs
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<CountryInfoState>(CountryInfoState.Loading)
-    val uiState: StateFlow<CountryInfoState> = _uiState
+    private val _uiState = MutableStateFlow<PetBookState>(PetBookState.Loading)
+    val uiState: StateFlow<PetBookState> = _uiState
 
 
 
@@ -36,23 +36,23 @@ class CountryInfoViewModel @Inject constructor(
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     fun refreshCountries(){
-        _uiState.value = CountryInfoState.Loading
+        _uiState.value = PetBookState.Loading
         viewModelScope.launch {
             try{
                 delay(1000)
-                repository.fetchCountries()
-                repository.countries
+                repository.fetchPets()
+                repository.pets
                     .catch { e ->
                         Log.d("INFO", "Exception Occurred")
-                        _uiState.value = CountryInfoState.Error(e.message)
+                        _uiState.value = PetBookState.Error(e.message)
 
                     }
                     .collect {
-                            value -> _uiState.value = CountryInfoState.Success(value)
+                            value -> _uiState.value = PetBookState.Success(value)
                     }
             } catch (e: Exception) {
                 Log.d("INFO", "Exception Occurred: $e")
-                _uiState.value = CountryInfoState.Error(e.message)
+                _uiState.value = PetBookState.Error(e.message)
             }
 
 
@@ -61,9 +61,9 @@ class CountryInfoViewModel @Inject constructor(
 
     }
 
-    fun favorite(country: Country) {
+    fun favorite(pet: Pet) {
         viewModelScope.launch {
-            repository.favorite(country)
+            repository.favorite(pet)
         }
     }
 

@@ -2,7 +2,7 @@ package com.kodeco.android.petbook.networking.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-interface CountryPrefs {
+interface PetPrefs {
     fun getLocalStorageEnabled(): Flow<Boolean>
     fun getFavoritesFeatureEnabled(): Flow<Boolean>
 

@@ -9,9 +9,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresExtension
-import com.kodeco.android.petbook.nav.CountryInfoNavHost
+import com.kodeco.android.petbook.nav.PetInfoNavHost
 import com.kodeco.android.petbook.networking.NetworkStatusChecker
-import com.kodeco.android.petbook.ui.components.CountryErrorScreen
+import com.kodeco.android.petbook.ui.components.PetErrorScreen
 import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -38,11 +38,11 @@ class MainActivity : ComponentActivity() {
             MyApplicationTheme {
 
                 if (networkStatusChecker.hasInternetConnection()){
-                    CountryInfoNavHost()
+                    PetInfoNavHost()
 
                 }
                 else{
-                    CountryErrorScreen(
+                    PetErrorScreen(
                         headline = "No Internet Connection",
                         subtitle = "Please Connect To Network"
                     ){

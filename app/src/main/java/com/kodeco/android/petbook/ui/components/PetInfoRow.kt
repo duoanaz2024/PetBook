@@ -17,7 +17,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import com.kodeco.android.petbook.model.Country
+import com.kodeco.android.petbook.model.Pet
 import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,16 +34,16 @@ import kotlinx.coroutines.launch
 
 @SuppressLint("CoroutineCreationDuringComposition", "StateFlowValueCalledInComposition")
 @Composable
-fun CountryInfoRow(
+fun PetInfoRow(
     favoritesEnabled: State<Boolean>,
-    country: Country,
-    onFavorite: (Country) ->Unit,
-    updateCountryDetails: () -> Unit) {
+    pet: Pet,
+    onFavorite: (Pet) ->Unit,
+    updatePetDetails: () -> Unit) {
 
     val coroutineScope = rememberCoroutineScope()
 
-    val capital: String = country.mainCapital
-    val isFavorite = country.isFavorite
+    val capital: String = pet.mainCapital
+    val isFavorite = pet.isFavorite
     val drawableId = if (isFavorite){R.drawable.star_filled}else{
         R.drawable.star_outline
     }
@@ -71,7 +71,7 @@ fun CountryInfoRow(
         ),
         modifier = Modifier
             .clickable {
-                updateCountryDetails()
+                updatePetDetails()
             }
             .fillMaxWidth()
             .wrapContentHeight()
@@ -85,7 +85,7 @@ fun CountryInfoRow(
         ){
             Column {
                 Text(
-                    text = "Name: " + country.commonName,
+                    text = "Name: " + pet.commonName,
                     Modifier.padding(6.dp)
                 )
 
@@ -104,7 +104,7 @@ fun CountryInfoRow(
                         .size(sizeAnimation.value.dp)
                         .padding(6.dp)
                         .clickable {
-                            onFavorite(country)
+                            onFavorite(pet)
                             coroutineScope.launch {
                                 rotateAnimation.animateTo(
                                     targetValue = targetRotation,

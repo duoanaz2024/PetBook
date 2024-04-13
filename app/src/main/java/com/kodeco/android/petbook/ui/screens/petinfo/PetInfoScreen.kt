@@ -8,16 +8,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.kodeco.android.petbook.ui.components.CountryErrorScreen
-import com.kodeco.android.petbook.ui.components.CountryInfoList
+import com.kodeco.android.petbook.ui.components.PetErrorScreen
+import com.kodeco.android.petbook.ui.components.PetInfoList
 import com.kodeco.android.petbook.ui.components.Loading
-import com.kodeco.android.petbook.util.CountryInfoState
+import com.kodeco.android.petbook.util.PetBookState
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
-fun CountryInfoScreen(
-    viewModel: CountryInfoViewModel,
-    onCountryRowTap: (Any?) -> Unit,
+fun PetInfoScreen(
+    viewModel: PetInfoViewModel,
+    onPetRowTap: (Any?) -> Unit,
     onSettingsTap: () -> Unit,
     aboutTap: () -> Unit
 ) {
@@ -27,25 +27,25 @@ fun CountryInfoScreen(
         color = Color.White
     ) {
 
-        val countryState = viewModel.uiState.collectAsState()
+        val petState = viewModel.uiState.collectAsState()
         val favoritesEnabled = viewModel.pref.getFavoritesFeatureEnabled().collectAsState(initial = false)
 
-        when (val curState = countryState.value) {
-            is CountryInfoState.Success -> {
-                val countryList = curState.countries
-                CountryInfoList(
+        when (val curState = petState.value) {
+            is PetBookState.Success -> {
+                val petList = curState.countries
+                PetInfoList(
                     favoritesEnabled=favoritesEnabled,
-                    countryList=countryList,
-                    onCountryRowTap=onCountryRowTap,
+                    petList=petList,
+                    onPetRowTap=onPetRowTap,
                     aboutTap=aboutTap,
                     onSettingsTap=onSettingsTap,
-                    onFavorite={country -> viewModel.favorite(country)}
+                    onFavorite={pet -> viewModel.favorite(pet)}
                 ){
                     viewModel.refreshCountries()
                 }
             }
-            is CountryInfoState.Error -> {
-                CountryErrorScreen(
+            is PetBookState.Error -> {
+                PetErrorScreen(
                     headline = "Error",
                     subtitle = curState.message ?: "Something Went Wrong"
                 ){
@@ -53,7 +53,7 @@ fun CountryInfoScreen(
                 }
 
             }
-            is CountryInfoState.Loading -> {
+            is PetBookState.Loading -> {
                 Loading(aboutTap=aboutTap){
                     viewModel.refreshCountries()
                 }

@@ -3,8 +3,8 @@ package com.kodeco.android.petbook.networking.dto
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class CountryDto(
-    val breeds: List<CountryNameDto>?,
+data class PetDto(
+    val breeds: List<PetBreedDto>?,
     val id: String,
     val url: String,
     val width: Long,
