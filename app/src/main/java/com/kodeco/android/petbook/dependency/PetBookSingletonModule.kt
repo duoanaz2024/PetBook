@@ -4,7 +4,7 @@ import android.content.Context
 import com.kodeco.android.petbook.networking.BASE_URL
 import com.kodeco.android.petbook.networking.database.PetDatabase
 import com.kodeco.android.petbook.networking.RemoteApiService
-import com.kodeco.android.petbook.networking.adapters.CountryAdapter
+import com.kodeco.android.petbook.networking.adapters.PetAdapter
 import com.kodeco.android.petbook.networking.buildClient
 import com.kodeco.android.petbook.networking.preferences.PetPrefs
 import com.kodeco.android.petbook.networking.preferences.PetPrefsImpl
@@ -25,9 +25,9 @@ import javax.inject.Singleton
 class PetBookSingletonModule {
     @Provides
     @Singleton
-    fun providesCountryService(): RemoteApiService {
+    fun providesPetService(): RemoteApiService {
         val moshi = Moshi.Builder()
-            .add(CountryAdapter())
+            .add(PetAdapter())
             .build()
 
         return Retrofit.Builder()
@@ -40,18 +40,18 @@ class PetBookSingletonModule {
 
     @Provides
     @Singleton
-    fun providesCountryDatabase(@ApplicationContext applicationContext: Context): PetDatabase {
+    fun providesPetDatabase(@ApplicationContext applicationContext: Context): PetDatabase {
         return PetDatabase.buildDatabase(applicationContext)
     }
 
     @Provides
     @Singleton
-    fun providesCountryPrefsImpl(@ApplicationContext applicationContext: Context
+    fun providesPetPrefsImpl(@ApplicationContext applicationContext: Context
     ): PetPrefs = PetPrefsImpl(applicationContext)
 
     @Provides
     @Singleton
-    fun providesCountryRepository(
+    fun providesPetRepository(
         service: RemoteApiService,
         database: PetDatabase,
         prefs: PetPrefs

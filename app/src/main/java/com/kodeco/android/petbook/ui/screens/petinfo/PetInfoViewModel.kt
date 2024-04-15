@@ -31,11 +31,11 @@ class PetInfoViewModel @Inject constructor(
 
 
     init {
-        refreshCountries()
+        refreshPets()
     }
 
     @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
-    fun refreshCountries(){
+    fun refreshPets(){
         _uiState.value = PetBookState.Loading
         viewModelScope.launch {
             try{

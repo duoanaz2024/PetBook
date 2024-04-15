@@ -23,7 +23,7 @@ class PetBookSettingsViewModel @Inject constructor(
     suspend fun toggleLocalStorage(checked: Boolean){
         pref.toggleLocalStorage()
         if (!checked){
-            database.petDao().deleteAllCountries()
+            database.petDao().deleteAllPets()
         }
         try{
             repository.fetchPets()

@@ -1,6 +1,6 @@
 package com.kodeco.android.petbook.networking
 
-import com.kodeco.android.petbook.networking.adapters.CountryAdapter
+import com.kodeco.android.petbook.networking.adapters.PetAdapter
 import com.squareup.moshi.Moshi
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -12,7 +12,7 @@ fun buildClient(): OkHttpClient =
 fun buildRetrofit(): Retrofit {
 
     val moshi = Moshi.Builder()
-        .add(CountryAdapter())
+        .add(PetAdapter())
         .build()
 
     return Retrofit.Builder()

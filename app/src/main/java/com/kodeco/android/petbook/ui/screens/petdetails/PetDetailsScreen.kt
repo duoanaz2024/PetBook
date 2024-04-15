@@ -37,6 +37,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.kodeco.android.petbook.ui.components.PetDetails
 
 enum class MapState {
     Shrunk,
@@ -49,29 +50,10 @@ fun PetDetailsScreen(
     petId: Int,
     viewModel: PetDetailsViewModel,
     onNavigateUp: () -> Unit) {
-    val country = viewModel.getPetDetails(petId)
+    val pet = viewModel.getPetDetails(petId)
 
-    if (country != null){
-        val capital: String = country.mainCapital
-
-        val mapState = remember { mutableStateOf(MapState.Shrunk) }
-        val transition = updateTransition(targetState = mapState, "Favorite")
-
-        val size = transition.animateDp(label = "Size Transition") { state ->
-            when(state.value){
-                MapState.Shrunk -> 100.dp
-                MapState.Expanded -> 200.dp
-            }
-        }
-
-        val infiniteTransition = rememberInfiniteTransition(label = "infinite transition")
-        val animatedColor by infiniteTransition.animateColor(
-            initialValue = Color(0xFF60DDAD),
-            targetValue = Color(0xFF4285F4),
-            animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
-            label = "color"
-        )
-
+    if (pet != null){
+        
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White
@@ -83,7 +65,7 @@ fun PetDetailsScreen(
                 topBar = {
                     TopAppBar(
                         title = {
-                            Text(text = country.commonName)
+                            Text(text = pet.breedName)
                         },
                         colors = TopAppBarDefaults.topAppBarColors(
                             containerColor = Color.White,
@@ -100,37 +82,7 @@ fun PetDetailsScreen(
                         }
                     )
                 }, content = {
-                    Column {
-                        Spacer(modifier = Modifier.height(75.dp))
-                        Text(text = "Capital: $capital",
-                            modifier = Modifier.padding(6.dp),
-                            color = animatedColor)
-                        Text(text = "Population: " + country.population,
-                            modifier = Modifier.padding(6.dp))
-                        Text(text = "Area: " + country.area,
-                            Modifier.padding(6.dp))
-                        SubcomposeAsyncImage(
-                            model = ImageRequest.Builder(LocalContext.current)
-                                .data(country.flagUrl)
-                                .crossfade(true)
-                                .build(),
-                            loading = {
-                                CircularProgressIndicator()
-                            },
-                            contentDescription = "Country Flag",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.padding(6.dp).
-                            size(size.value).clickable {
-                                mapState.value = when(mapState.value){
-                                    MapState.Expanded -> MapState.Shrunk
-                                    MapState.Shrunk -> MapState.Expanded
-                                }
-
-                            }
-                        )
-
-
-                    }
+                    PetDetails(pet = pet)
 
                 })
 
@@ -138,7 +90,7 @@ fun PetDetailsScreen(
 
     }
     else{
-        Log.d("INFO", "Country is Null")
+        Log.d("INFO", "Pet Object is Null")
     }
 
 

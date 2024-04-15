@@ -15,7 +15,7 @@ abstract class PetDatabase : RoomDatabase() {
         fun buildDatabase(context: Context) = Room.databaseBuilder(
             context,
             PetDatabase::class.java,
-            "country-db"
+            "pet-db"
         ).build()
     }
 }

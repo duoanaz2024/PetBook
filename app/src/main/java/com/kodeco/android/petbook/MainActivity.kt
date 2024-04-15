@@ -5,10 +5,14 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.os.Build
 import android.os.Bundle
+import android.view.Window
+import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.RequiresExtension
+import androidx.compose.ui.graphics.Color
+import androidx.core.content.ContextCompat
 import com.kodeco.android.petbook.nav.PetInfoNavHost
 import com.kodeco.android.petbook.networking.NetworkStatusChecker
 import com.kodeco.android.petbook.ui.components.PetErrorScreen
@@ -33,7 +37,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         super.onCreate(savedInstanceState)
-
+ 
         setContent {
             MyApplicationTheme {
 

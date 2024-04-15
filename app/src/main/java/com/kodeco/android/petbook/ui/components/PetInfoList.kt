@@ -20,7 +20,11 @@ import androidx.compose.runtime.State
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kodeco.android.petbook.model.Pet
 
 
@@ -47,7 +51,7 @@ fun PetInfoList(
             IconButton(onClick = {onSettingsTap()}) {
                 Icon(imageVector = Icons.Default.Settings,
                     contentDescription = "Settings",
-                    tint = Color.Black)
+                    tint = Color.Gray)
             }
 
             Spacer(modifier = Modifier.weight((1f)))
@@ -62,12 +66,24 @@ fun PetInfoList(
             IconButton(onClick = {aboutTap()}) {
                 Icon(imageVector = Icons.Default.Info,
                     contentDescription = "About",
-                    tint = Color.Black)
+                    tint = Color.Gray)
             }
 
         }
+        Text(
+            text = "Daily Feed",
+            style = TextStyle(
+                fontSize = 25.sp,
+                color = Color.Black,
+                fontFamily = FontFamily.Cursive,
+                fontWeight = FontWeight.Bold
+            ),
+            modifier = Modifier.padding(horizontal = 6.dp)
+        )
 
-        LazyColumn {
+        LazyColumn(modifier = Modifier.fillMaxWidth(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(8.dp)) {
             items(petList.size) { index ->
                 PetInfoRow(
                     favoritesEnabled=favoritesEnabled,

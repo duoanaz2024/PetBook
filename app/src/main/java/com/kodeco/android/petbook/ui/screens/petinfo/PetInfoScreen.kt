@@ -32,7 +32,7 @@ fun PetInfoScreen(
 
         when (val curState = petState.value) {
             is PetBookState.Success -> {
-                val petList = curState.countries
+                val petList = curState.pets
                 PetInfoList(
                     favoritesEnabled=favoritesEnabled,
                     petList=petList,
@@ -41,7 +41,7 @@ fun PetInfoScreen(
                     onSettingsTap=onSettingsTap,
                     onFavorite={pet -> viewModel.favorite(pet)}
                 ){
-                    viewModel.refreshCountries()
+                    viewModel.refreshPets()
                 }
             }
             is PetBookState.Error -> {
@@ -49,13 +49,13 @@ fun PetInfoScreen(
                     headline = "Error",
                     subtitle = curState.message ?: "Something Went Wrong"
                 ){
-                    viewModel.refreshCountries()
+                    viewModel.refreshPets()
                 }
 
             }
             is PetBookState.Loading -> {
                 Loading(aboutTap=aboutTap){
-                    viewModel.refreshCountries()
+                    viewModel.refreshPets()
                 }
 
             }

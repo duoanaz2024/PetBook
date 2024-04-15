@@ -2,7 +2,7 @@ package com.kodeco.android.petbook.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-val CoolBlue = Color(0xFF459EDB)
-val DarkBlue = Color(0xFF0B72B9)
-val CoolGreen = Color(0xFF45DB89)
+val CoolBlue = Color(0xFFB09CD3)
+val DarkBlue = Color(0xFFA582E2)
+val CoolGreen = Color(0xFFCDC2E0)
 

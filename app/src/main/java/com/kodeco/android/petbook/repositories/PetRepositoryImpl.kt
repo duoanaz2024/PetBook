@@ -34,28 +34,28 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
                 // DataManager.favorites = favorites.toSet()
             }
             DataManager.pets.value = try {
-                val response = apiService.getCountries()
+                val response = apiService.getPets()
                 if (response.isSuccessful) {
                     val petList = response.body()!!
                         .toMutableList()
                         .map { pet ->
-                            pet.copy(isFavorite = favorites.contains(pet.commonName))
+                            pet.copy(isFavorite = favorites.contains(pet.id))
                         }
                     if (cacheEnabled){
-                        dao.insertCountries(petList)
+                        dao.insertPets(petList)
                     }
                     petList
                 } else {
-                    if (cacheEnabled && dao.getCountries().isNotEmpty()){
-                        dao.getCountries()
+                    if (cacheEnabled && dao.getPets().isNotEmpty()){
+                        dao.getPets()
                     }
                     else{
                         throw Exception(response.message())
                     }
                 }
             } catch (e: Exception) {
-                if (cacheEnabled && dao.getCountries().isNotEmpty()){
-                    dao.getCountries()
+                if (cacheEnabled && dao.getPets().isNotEmpty()){
+                    dao.getPets()
                 }
                 else{
                     throw Exception("${e.message}")
@@ -76,32 +76,32 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
     override suspend fun favorite(pet: Pet) {
         val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
         if (cacheEnabled){
-            if (dao.getCountries().isEmpty()){
-                dao.insertCountries(DataManager.pets.value)
+            if (dao.getPets().isEmpty()){
+                dao.insertPets(DataManager.pets.value)
             }
         }
         val favorites: List<String> = if (cacheEnabled){
             dao.getFavorites(true)
         } else {
             val mutableList = DataManager.favorites.toMutableList()
-            if (mutableList.contains(pet.commonName)){
-                mutableList.remove(pet.commonName)
+            if (mutableList.contains(pet.id)){
+                mutableList.remove(pet.id)
             }
             else{
-                mutableList.add(pet.commonName)
+                mutableList.add(pet.id)
             }
             DataManager.favorites = mutableList.toSet()
             mutableList
         }
-        var isFavorite = favorites.contains(pet.commonName)
+        var isFavorite = favorites.contains(pet.id)
         if (cacheEnabled){
             isFavorite = !isFavorite
-            dao.updateCountry(pet.copy(isFavorite = isFavorite))
+            dao.updatePet(pet.copy(isFavorite = isFavorite))
         }
 
         val index = DataManager.pets.value.indexOf(pet)
-        val mutableCountries = DataManager.pets.value.toMutableList()
-        mutableCountries[index] = mutableCountries[index].copy(isFavorite = isFavorite)
-        DataManager.pets.value = mutableCountries.toList()
+        val mutablePets = DataManager.pets.value.toMutableList()
+        mutablePets[index] = mutablePets[index].copy(isFavorite = isFavorite)
+        DataManager.pets.value = mutablePets.toList()
     }
 }
