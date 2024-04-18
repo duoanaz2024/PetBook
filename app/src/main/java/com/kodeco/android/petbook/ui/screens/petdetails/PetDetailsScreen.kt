@@ -2,23 +2,9 @@ package com.kodeco.android.petbook.ui.screens.petdetails
 
 import android.annotation.SuppressLint
 import android.util.Log
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.core.RepeatMode
-import androidx.compose.animation.core.animateDp
-import androidx.compose.animation.core.infiniteRepeatable
-import androidx.compose.animation.core.rememberInfiniteTransition
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.core.updateTransition
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
@@ -27,17 +13,16 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import coil.compose.SubcomposeAsyncImage
-import coil.request.ImageRequest
+import androidx.compose.ui.tooling.preview.Preview
+import com.kodeco.android.petbook.model.Pet
+import com.kodeco.android.petbook.repositories.PetRepository
 import com.kodeco.android.petbook.ui.components.PetDetails
+import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 enum class MapState {
     Shrunk,
@@ -94,4 +79,85 @@ fun PetDetailsScreen(
     }
 
 
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPetDetailsScreen(){
+    MyApplicationTheme {
+        PetDetailsScreen(
+            petId = 0,
+            type = "feed",
+            viewModel = PetDetailsViewModel(repository = object : PetRepository {
+                override val pets: Flow<List<Pet>>
+                    get() = MutableStateFlow(listOf(
+                        Pet(
+                        id = "1",
+                        url = "https://",
+                        width = 100,
+                        height = 200,
+                        breedName = "Cat",
+                        temperament = "Lovely",
+                        origin = "US",
+                        description = "Lovely Cat For Pet Book",
+                        lifeSpan = "5",
+                        childFriendly = 5,
+                        energyLevel = 5,
+                        intelligence = 6,
+                        strangerFriendly = 5,
+                        wikipediaUrl = "https://"
+                    )
+                    )).asStateFlow()
+                override val petFavorites: Flow<List<Pet>>
+                    get() = MutableStateFlow(listOf(
+                        Pet(
+                        id = "1",
+                        url = "https://",
+                        width = 100,
+                        height = 200,
+                        breedName = "Cat",
+                        temperament = "Lovely",
+                        origin = "US",
+                        description = "Lovely Cat For Pet Book",
+                        lifeSpan = "5",
+                        childFriendly = 5,
+                        energyLevel = 5,
+                        intelligence = 6,
+                        strangerFriendly = 5,
+                        wikipediaUrl = "https://"
+                    )
+                    )).asStateFlow()
+
+                override suspend fun fetchPets() {
+                }
+
+                override suspend fun fetchFavorites() {
+                }
+
+                override fun getPet(index: Int, type: String): Pet {
+                    return Pet(
+                        id = "1",
+                        url = "https://",
+                        width = 100,
+                        height = 200,
+                        breedName = "Cat",
+                        temperament = "Lovely",
+                        origin = "US",
+                        description = "Lovely Cat For Pet Book",
+                        lifeSpan = "5",
+                        childFriendly = 5,
+                        energyLevel = 5,
+                        intelligence = 6,
+                        strangerFriendly = 5,
+                        wikipediaUrl = "https://"
+                    )
+                }
+
+                override suspend fun favorite(pet: Pet) {
+                }
+
+            })) {
+            
+        }
+    }
 }

@@ -73,11 +73,10 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
     }
 
     override fun getPet(index: Int, type: String): Pet? {
-        if (type == "feed"){
-            return DataManager.pets.value.getOrNull(index)
-        }
-        else{
-            return DataManager.petFavorites.value.getOrNull(index)
+        return if (type == "feed"){
+            DataManager.pets.value.getOrNull(index)
+        } else{
+            DataManager.petFavorites.value.getOrNull(index)
         }
 
     }
