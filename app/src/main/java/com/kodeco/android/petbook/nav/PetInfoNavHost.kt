@@ -14,7 +14,6 @@ import com.kodeco.android.petbook.ui.screens.favorites.FavoritesScreen
 import com.kodeco.android.petbook.ui.screens.petdetails.PetDetailsScreen
 import com.kodeco.android.petbook.ui.screens.petinfo.PetInfoScreen
 import com.kodeco.android.petbook.ui.screens.settings.PetBookSettingsScreen
-import com.kodeco.android.petbook.ui.screens.splash.SplashScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
