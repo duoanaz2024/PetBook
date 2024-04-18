@@ -14,7 +14,7 @@ class MainActivityViewModel @Inject constructor() : ViewModel(){
     private val _isLoading = MutableStateFlow(true)
     val isLoading = _isLoading.asStateFlow()
     init {
-        viewModelScope.launch()  {
+        viewModelScope.launch  {
             delay(800)
             _isLoading.value = false
         }

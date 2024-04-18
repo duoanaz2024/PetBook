@@ -48,7 +48,7 @@ class MainActivity : ComponentActivity() {
                     ){
                         val intent = Intent(this, MainActivity::class.java)
                         finish()
-                        startActivity(intent);
+                        startActivity(intent)
                     }
                     }
 

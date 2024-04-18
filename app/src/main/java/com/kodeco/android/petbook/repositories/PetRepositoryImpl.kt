@@ -1,6 +1,5 @@
 package com.kodeco.android.petbook.repositories
 
-import android.util.Log
 import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.networking.RemoteApiService
 import com.kodeco.android.petbook.networking.dao.PetDao

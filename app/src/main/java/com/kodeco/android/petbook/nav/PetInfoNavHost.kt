@@ -69,8 +69,7 @@ fun PetInfoNavHost(){
         }
 
         composable("aboutScreen"){
-            PetBookAboutScreen(
-            ){
+            PetBookAboutScreen{
                 navController.navigateUp()
             }
         }

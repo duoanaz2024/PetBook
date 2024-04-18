@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.map
 
 private const val STORE_NAME = "pet_prefs"
 
-class PetPrefsImpl (private val context: Context)  : PetPrefs {
+class PetPrefsImpl (context: Context)  : PetPrefs {
     private val Context.dataStore by preferencesDataStore(name = STORE_NAME)
     private val dataStore = context.dataStore
     override fun getLocalStorageEnabled(): Flow<Boolean> {
