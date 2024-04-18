@@ -16,7 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
 
 @Composable
 fun PetErrorScreen(headline: String, subtitle: String, onClick: () -> Unit) {
@@ -56,4 +58,15 @@ fun PetErrorScreen(headline: String, subtitle: String, onClick: () -> Unit) {
         }
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+fun PetErrorScreenPreview() {
+    MyApplicationTheme {
+        PetErrorScreen(headline = "Something Went Wrong", subtitle = "Please Retry") {
+        }
+     }
+}
+
+
 

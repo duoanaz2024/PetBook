@@ -1,4 +1,4 @@
-package com.kodeco.android.petbook.ui.screens.petinfo
+package com.kodeco.android.petbook.ui.screens.favorites
 
 import android.os.Build
 import android.util.Log
@@ -20,15 +20,13 @@ import javax.inject.Inject
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
-class PetInfoViewModel @Inject constructor(
+class FavoritesViewModel @Inject constructor(
     private val repository: PetRepository,
     val pref: PetPrefs
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<PetBookState>(PetBookState.Loading)
     val uiState: StateFlow<PetBookState> = _uiState
-
-
 
     init {
         refreshPets()
@@ -39,9 +37,8 @@ class PetInfoViewModel @Inject constructor(
         _uiState.value = PetBookState.Loading
         viewModelScope.launch {
             try{
-                //delay(1000)
-                repository.fetchPets()
-                repository.pets
+                repository.fetchFavorites()
+                repository.petFavorites
                     .catch { e ->
                         Log.d("INFO", "Exception Occurred")
                         _uiState.value = PetBookState.Error(e.message)
@@ -62,10 +59,28 @@ class PetInfoViewModel @Inject constructor(
     }
 
     fun favorite(pet: Pet) {
+        _uiState.value = PetBookState.Loading
         viewModelScope.launch {
-            repository.favorite(pet)
+            try{
+                delay(100)
+                repository.favorite(pet)
+                repository.petFavorites
+                    .catch { e ->
+                        Log.d("INFO", "Exception Occurred")
+                        _uiState.value = PetBookState.Error(e.message)
+
+                    }
+                    .collect {
+                            value -> _uiState.value = PetBookState.Success(value)
+                    }
+            } catch (e: Exception) {
+                Log.d("INFO", "Exception Occurred: $e")
+                _uiState.value = PetBookState.Error(e.message)
+            }
         }
+
     }
+
 
 
 }

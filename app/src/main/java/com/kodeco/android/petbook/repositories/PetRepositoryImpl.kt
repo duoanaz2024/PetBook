@@ -1,5 +1,6 @@
 package com.kodeco.android.petbook.repositories
 
+import android.util.Log
 import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.networking.RemoteApiService
 import com.kodeco.android.petbook.networking.dao.PetDao
@@ -14,6 +15,7 @@ object DataManager {
 
     var favorites = setOf<String>()
     val pets: MutableStateFlow<List<Pet>> = MutableStateFlow(emptyList())
+    val petFavorites: MutableStateFlow<List<Pet>> = MutableStateFlow(emptyList())
 
 }
 
@@ -21,6 +23,7 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
                             private val dao: PetDao, private val prefs: PetPrefs) : PetRepository {
 
     override val pets: StateFlow<List<Pet>> = DataManager.pets.asStateFlow()
+    override val petFavorites: StateFlow<List<Pet>> = DataManager.petFavorites.asStateFlow()
 
     override suspend fun fetchPets() {
 
@@ -69,8 +72,14 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
 
     }
 
-    override fun getPet(index: Int): Pet? {
-        return DataManager.pets.value.getOrNull(index)
+    override fun getPet(index: Int, type: String): Pet? {
+        if (type == "feed"){
+            return DataManager.pets.value.getOrNull(index)
+        }
+        else{
+            return DataManager.petFavorites.value.getOrNull(index)
+        }
+
     }
 
     override suspend fun favorite(pet: Pet) {
@@ -100,8 +109,46 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
         }
 
         val index = DataManager.pets.value.indexOf(pet)
-        val mutablePets = DataManager.pets.value.toMutableList()
-        mutablePets[index] = mutablePets[index].copy(isFavorite = isFavorite)
-        DataManager.pets.value = mutablePets.toList()
+        if (index != -1){
+            val mutablePets = DataManager.pets.value.toMutableList()
+            mutablePets[index] = mutablePets[index].copy(isFavorite = isFavorite)
+            DataManager.pets.value = mutablePets.toList()
+        }
+
+        DataManager.petFavorites.value = try {
+            if (cacheEnabled){
+                dao.getAllFavorites(true)
+            }
+            else{
+                throw Exception("Something Went Wrong")
+            }
+        } catch (e: Exception) {
+            throw Exception("${e.message}")
+
+        }
     }
+
+    override suspend fun fetchFavorites() {
+
+        try{
+            val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+            DataManager.petFavorites.value = try {
+                if (cacheEnabled){
+                    dao.getAllFavorites(true)
+                }
+                else{
+                    throw Exception("Something Went Wrong")
+                }
+            } catch (e: Exception) {
+                throw Exception("${e.message}")
+
+
+            }
+        } catch (e: Exception) {
+            throw Exception("Request failed: ${e.message}")
+        }
+
+
+    }
+
 }

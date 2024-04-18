@@ -41,7 +41,7 @@ fun PetBookSettingsScreen(
     onClick: () -> Unit) {
 
     var toggleFav = viewModel.getFavoritesFeatureEnabled().collectAsState(initial = false).value
-    var cacheEnabled = viewModel.getLocalStorageEnabled().collectAsState(initial = false).value
+    // var cacheEnabled = viewModel.getLocalStorageEnabled().collectAsState(initial = false).value
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -99,7 +99,7 @@ fun PetBookSettingsScreen(
                                 })
                         }
 
-                        Row(
+                        /*Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically,
@@ -116,7 +116,7 @@ fun PetBookSettingsScreen(
                                         viewModel.toggleLocalStorage(cacheEnabled)
                                     }
                                 })
-                        }
+                        }*/
 
                     }
                 }

@@ -6,10 +6,14 @@ import kotlinx.coroutines.flow.Flow
 interface PetRepository {
 
     val pets: Flow<List<Pet>>
+    val petFavorites: Flow<List<Pet>>
 
     suspend fun fetchPets()
 
-    fun getPet(index: Int): Pet?
+    suspend fun fetchFavorites()
+
+    fun getPet(index: Int, type: String): Pet?
 
     suspend fun favorite(pet: Pet)
+
 }

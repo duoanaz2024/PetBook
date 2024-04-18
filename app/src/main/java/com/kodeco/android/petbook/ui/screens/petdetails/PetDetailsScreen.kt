@@ -48,9 +48,10 @@ enum class MapState {
 @Composable
 fun PetDetailsScreen(
     petId: Int,
+    type: String,
     viewModel: PetDetailsViewModel,
     onNavigateUp: () -> Unit) {
-    val pet = viewModel.getPetDetails(petId)
+    val pet = viewModel.getPetDetails(petId, type)
 
     if (pet != null){
         
@@ -83,7 +84,6 @@ fun PetDetailsScreen(
                     )
                 }, content = {
                     PetDetails(pet = pet)
-
                 })
 
         }

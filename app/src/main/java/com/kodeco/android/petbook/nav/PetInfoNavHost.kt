@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.kodeco.android.petbook.ui.screens.about.PetBookAboutScreen
+import com.kodeco.android.petbook.ui.screens.favorites.FavoritesScreen
 import com.kodeco.android.petbook.ui.screens.petdetails.PetDetailsScreen
 import com.kodeco.android.petbook.ui.screens.petinfo.PetInfoScreen
 import com.kodeco.android.petbook.ui.screens.settings.PetBookSettingsScreen
@@ -34,23 +35,40 @@ fun PetInfoNavHost(){
             PetInfoScreen(
                 viewModel = hiltViewModel(),
                 onPetRowTap = { petIndex ->
-                    navController.navigate("details/$petIndex")
+                    navController.navigate("details/feed/$petIndex")
                 },
                 onSettingsTap = {
                     navController.navigate("settingsScreen")
+                },
+                onHeartTap = {
+                    navController.navigate("petFavorites")
                 }
             ){
                 navController.navigate("aboutScreen")
             }
         }
 
-        composable("details/{petIndex}",
-            arguments = listOf(navArgument("petIndex") { type = NavType.IntType})){
+        composable("petFavorites"){
+            FavoritesScreen(
+                viewModel = hiltViewModel(),
+                onPetRowTap = { petIndex ->
+                    navController.navigate("details/favorites/$petIndex")
+                }
+            ){
+                navController.navigateUp()
+            }
+        }
+
+        composable("details/{type}/{petIndex}",
+            arguments = listOf(navArgument("petIndex") { type = NavType.IntType},
+                navArgument("type") { type = NavType.StringType})){
                 backStackEntry ->
             val petIndex = backStackEntry.arguments?.getInt("petIndex") ?: 0
+            val type = backStackEntry.arguments?.getString("type") ?: "feed"
 
             PetDetailsScreen(
                 petId = petIndex,
+                type=type,
                 viewModel = hiltViewModel()
             ) {
                 navController.navigateUp()

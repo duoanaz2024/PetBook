@@ -8,9 +8,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.kodeco.android.petbook.ui.components.LinearLoading
 import com.kodeco.android.petbook.ui.components.PetErrorScreen
 import com.kodeco.android.petbook.ui.components.PetInfoList
-import com.kodeco.android.petbook.ui.components.Loading
 import com.kodeco.android.petbook.util.PetBookState
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
@@ -19,6 +19,7 @@ fun PetInfoScreen(
     viewModel: PetInfoViewModel,
     onPetRowTap: (Any?) -> Unit,
     onSettingsTap: () -> Unit,
+    onHeartTap: () -> Unit,
     aboutTap: () -> Unit
 ) {
 
@@ -39,6 +40,7 @@ fun PetInfoScreen(
                     onPetRowTap=onPetRowTap,
                     aboutTap=aboutTap,
                     onSettingsTap=onSettingsTap,
+                    onHeartTap = onHeartTap,
                     onFavorite={pet -> viewModel.favorite(pet)}
                 ){
                     viewModel.refreshPets()
@@ -54,9 +56,10 @@ fun PetInfoScreen(
 
             }
             is PetBookState.Loading -> {
-                Loading(aboutTap=aboutTap){
+                /*Loading(aboutTap=aboutTap){
                     viewModel.refreshPets()
-                }
+                }*/
+                LinearLoading()
 
             }
 

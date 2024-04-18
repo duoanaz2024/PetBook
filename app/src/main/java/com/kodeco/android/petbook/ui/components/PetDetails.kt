@@ -16,27 +16,33 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
 import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.ui.screens.petdetails.MapState
+import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
 
 @Composable
 fun PetDetails(pet: Pet){
 
     val mapState = remember { mutableStateOf(MapState.Shrunk) }
     val transition = updateTransition(targetState = mapState, "Favorite")
+    var webView by remember { mutableStateOf(false) }
+    var webViewString by remember { mutableStateOf("Open Wikipedia") }
 
     val size = transition.animateDp(label = "Size Transition") { state ->
         when(state.value){
@@ -52,14 +58,39 @@ fun PetDetails(pet: Pet){
         animationSpec = infiniteRepeatable(tween(1000), RepeatMode.Reverse),
         label = "color"
     )
+
+    val dimension: String = pet.height.toString() + " x " + pet.width.toString()
+
     val scrollState = rememberScrollState()
 
-    Column(modifier = Modifier.fillMaxSize().verticalScroll(scrollState)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .verticalScroll(scrollState)) {
         Spacer(modifier = Modifier.height(75.dp))
+
+        if (pet.wikipediaUrl.startsWith("http")){
+            Button(
+                onClick = {
+                    webView = !webView
+                    webViewString = if (webView){
+                        "Hide Wikipedia"
+                    } else{
+                        "Open Wikipedia"
+                    }
+                }
+            ) {
+                Text(webViewString)
+            }
+
+        }
+        if (webView){
+            WebViewComponent(url = pet.wikipediaUrl)
+        }
+
         Text(text = "Temperament: ${pet.temperament}",
             modifier = Modifier.padding(6.dp),
             color = animatedColor)
-        Text(text = "Origin: " + pet.origin,
+        Text(text = "Size: $dimension",
             modifier = Modifier.padding(6.dp))
         Text(text = "Description: " + pet.description,
             Modifier.padding(6.dp))
@@ -90,9 +121,30 @@ fun PetDetails(pet: Pet){
         PetRating("Energy Level", pet.energyLevel)
         PetRating("Intelligence", pet.intelligence)
         PetRating("Stranger Friendly", pet.strangerFriendly)
-        Text(text = "Wikipedia: " + pet.wikipediaUrl.toString(),
-            Modifier.padding(6.dp))
 
 
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewPetDetails(){
+    MyApplicationTheme {
+        PetDetails(pet = Pet(
+            id = "1",
+            url = "https://",
+            width = 100,
+            height = 200,
+            breedName = "Cat",
+            temperament = "Lovely",
+            origin = "US",
+            description = "Lovely Cat For Pet Book",
+            lifeSpan = "5",
+            childFriendly = 5,
+            energyLevel = 5,
+            intelligence = 6,
+            strangerFriendly = 5,
+            wikipediaUrl = "https://"
+        ))
     }
 }
