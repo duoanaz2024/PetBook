@@ -23,13 +23,6 @@ fun PetInfoNavHost(){
     val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "petList"){
 
-        composable(route = "splash") {
-            SplashScreen(
-                onSplashEndedValid = {
-                    navController.navigate("petList")
-                }
-            )
-        }
 
         composable("petList"){
             PetInfoScreen(
