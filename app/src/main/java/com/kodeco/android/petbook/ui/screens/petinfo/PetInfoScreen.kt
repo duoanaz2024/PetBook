@@ -42,17 +42,28 @@ fun PetInfoScreen(
         when (val curState = petState.value) {
             is PetBookState.Success -> {
                 val petList = curState.pets
-                PetInfoList(
-                    favoritesEnabled=favoritesEnabled,
-                    petList=petList,
-                    onPetRowTap=onPetRowTap,
-                    aboutTap=aboutTap,
-                    onSettingsTap=onSettingsTap,
-                    onHeartTap = onHeartTap,
-                    onFavorite={pet -> viewModel.favorite(pet)}
-                ){
-                    viewModel.refreshPets()
+                if (petList.isEmpty()){
+                    PetErrorScreen(
+                        headline = "Error",
+                        subtitle = "Something Went Wrong, Feed Unavailable"
+                    ){
+                        viewModel.refreshPets()
+                    }
                 }
+                else{
+                    PetInfoList(
+                        favoritesEnabled=favoritesEnabled,
+                        petList=petList,
+                        onPetRowTap=onPetRowTap,
+                        aboutTap=aboutTap,
+                        onSettingsTap=onSettingsTap,
+                        onHeartTap = onHeartTap,
+                        onFavorite={pet -> viewModel.favorite(pet)}
+                    ){
+                        viewModel.refreshPets()
+                    }
+                }
+
             }
             is PetBookState.Error -> {
                 PetErrorScreen(
@@ -64,9 +75,6 @@ fun PetInfoScreen(
 
             }
             is PetBookState.Loading -> {
-                /*Loading(aboutTap=aboutTap){
-                    viewModel.refreshPets()
-                }*/
                 LinearLoading()
 
             }
