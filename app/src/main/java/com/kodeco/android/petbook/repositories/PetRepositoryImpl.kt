@@ -27,7 +27,8 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
     override suspend fun fetchPets() {
 
         try{
-            val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+            // val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+            val cacheEnabled = true
             // var favorites: List<String> = DataManager.favorites.toList()
             var favorites: List<String> = emptyList()
             DataManager.favorites = setOf()
@@ -81,7 +82,8 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
     }
 
     override suspend fun favorite(pet: Pet) {
-        val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+        //val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+        val cacheEnabled = true
         if (cacheEnabled){
             if (dao.getPets().isEmpty()){
                 dao.insertPets(DataManager.pets.value)
@@ -129,7 +131,8 @@ class PetRepositoryImpl(private val apiService: RemoteApiService,
     override suspend fun fetchFavorites() {
 
         try{
-            val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+            // val cacheEnabled = prefs.getLocalStorageEnabled().take(1).first()
+            val cacheEnabled = true
             DataManager.petFavorites.value = try {
                 if (cacheEnabled){
                     dao.getAllFavorites(true)

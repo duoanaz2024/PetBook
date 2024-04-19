@@ -19,10 +19,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kodeco.android.petbook.R
 import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
@@ -61,7 +66,12 @@ fun FavoritesList(
                     )
                     Text(
                         modifier = Modifier.padding(8.dp),
-                        text = "Please Enable Favorites Feature In Settings"
+                        text = "Please Enable Favorites Feature In Settings",
+                        style = TextStyle(
+                            fontSize = 20.sp,
+                            color = Color.Black,
+                            fontFamily = FontFamily.Cursive,
+                            fontWeight = FontWeight.Bold)
                     )
                 }
             }
@@ -83,7 +93,12 @@ fun FavoritesList(
                         )
                         Text(
                             modifier = Modifier.padding(8.dp),
-                            text = "No Favorites"
+                            text = "No Favorites",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily.Cursive,
+                                fontWeight = FontWeight.Bold)
                         )
                     }
                 }

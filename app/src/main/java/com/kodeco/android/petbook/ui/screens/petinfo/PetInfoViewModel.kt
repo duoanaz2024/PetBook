@@ -43,7 +43,6 @@ class PetInfoViewModel @Inject constructor(
                 repository.fetchPets()
                 repository.pets
                     .catch { e ->
-                        Log.d("INFO", "Exception Occurred")
                         _uiState.value = PetBookState.Error(e.message)
 
                     }
@@ -51,7 +50,6 @@ class PetInfoViewModel @Inject constructor(
                             value -> _uiState.value = PetBookState.Success(value)
                     }
             } catch (e: Exception) {
-                Log.d("INFO", "Exception Occurred: $e")
                 _uiState.value = PetBookState.Error(e.message)
             }
 

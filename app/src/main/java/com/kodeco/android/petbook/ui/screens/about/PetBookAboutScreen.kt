@@ -19,8 +19,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -38,7 +42,12 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "About")
+                        Text(text = "About",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily.Cursive,
+                                fontWeight = FontWeight.Bold))
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White,
@@ -67,11 +76,33 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
                     ) {
                         Text(
                             modifier = Modifier.padding(8.dp),
-                            text = "Pet Book"
+                            text = "PetBook",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily.Cursive,
+                                fontWeight = FontWeight.Bold)
                         )
                         Text(
                             modifier = Modifier.padding(8.dp),
-                            text = "Version:${com.kodeco.android.petbook.BuildConfig.VERSION_NAME}"
+                            text = "An App for pet lovers to get a daily" +
+                                    " feed of Pet Information. Initial Version of" +
+                                    " this app supports feed for Cats",
+                            style = TextStyle(
+                                    fontSize = 20.sp,
+                            color = Color.Black,
+                            fontFamily = FontFamily.Cursive,
+                            fontWeight = FontWeight.Bold
+                        ),
+                        )
+                        Text(
+                            modifier = Modifier.padding(8.dp),
+                            text = "Version:${com.kodeco.android.petbook.BuildConfig.VERSION_NAME}",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily.Cursive,
+                                fontWeight = FontWeight.Bold)
                         )
                     }
                 }

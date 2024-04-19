@@ -14,8 +14,7 @@ import javax.inject.Inject
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @HiltViewModel
 class PetBookSettingsViewModel @Inject constructor(
-    private val pref: PetPrefs,
-    private val repository: PetRepository
+    private val pref: PetPrefs
 ) : ViewModel(){
 
 

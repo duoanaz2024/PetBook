@@ -28,6 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -62,7 +64,12 @@ fun PetBookSettingsScreen(
             topBar = {
                 TopAppBar(
                     title = {
-                        Text(text = "Settings")
+                        Text(text = "Settings",
+                            style = TextStyle(
+                                fontSize = 20.sp,
+                                color = Color.Black,
+                                fontFamily = FontFamily.Cursive,
+                                fontWeight = FontWeight.Bold))
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = Color.White,
@@ -95,7 +102,11 @@ fun PetBookSettingsScreen(
                         ){
                             Text(
                                 text = "Enable Favorites Feature",
-                                style = TextStyle(fontSize = 20.sp)
+                                style = TextStyle(
+                                    fontSize = 20.sp,
+                                    color = Color.Black,
+                                    fontFamily = FontFamily.Cursive,
+                                    fontWeight = FontWeight.Bold)
                             )
                             Switch(
                                 checked = toggleFav,
@@ -140,61 +151,7 @@ fun PetBookSettingsScreen(
 @Composable
 fun PreviewSettingsScreen(){
     MyApplicationTheme {
-        PetBookSettingsScreen(viewModel = PetBookSettingsViewModel(repository = object :
-            PetRepository {
-            override val pets: Flow<List<Pet>>
-                get() = MutableStateFlow(listOf(
-                    Pet(
-                        id = "1",
-                        url = "https://",
-                        width = 100,
-                        height = 200,
-                        breedName = "Cat",
-                        temperament = "Lovely",
-                        origin = "US",
-                        description = "Lovely Cat For Pet Book",
-                        lifeSpan = "5",
-                        childFriendly = 5,
-                        energyLevel = 5,
-                        intelligence = 6,
-                        strangerFriendly = 5,
-                        wikipediaUrl = "https://"
-                    )
-                )).asStateFlow()
-            override val petFavorites: Flow<List<Pet>>
-                get() = MutableStateFlow(listOf(
-                    Pet(
-                        id = "1",
-                        url = "https://",
-                        width = 100,
-                        height = 200,
-                        breedName = "Cat",
-                        temperament = "Lovely",
-                        origin = "US",
-                        description = "Lovely Cat For Pet Book",
-                        lifeSpan = "5",
-                        childFriendly = 5,
-                        energyLevel = 5,
-                        intelligence = 6,
-                        strangerFriendly = 5,
-                        wikipediaUrl = "https://"
-                    )
-                )).asStateFlow()
-
-            override suspend fun fetchPets() {
-            }
-
-            override suspend fun fetchFavorites() {
-            }
-
-            override fun getPet(index: Int, type: String): Pet? {
-                return null
-            }
-
-            override suspend fun favorite(pet: Pet) {
-            }
-
-        },
+        PetBookSettingsScreen(viewModel = PetBookSettingsViewModel(
             pref = object : PetPrefs {
                 override fun getLocalStorageEnabled(): Flow<Boolean> {
                     return MutableStateFlow(true).asStateFlow()
