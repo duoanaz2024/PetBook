@@ -1,7 +1,7 @@
 # PetBook
 An App for pet lovers to get a daily feed of pet information. Initial Version of this app supports feed for cats. Users can use the favorite feature if they chose to do it. Details screen provides more information about the pet and users get an ability to open wikipedia in a webview inside app as well.
 
-App uses Hilt DI.
+App uses Hilt DI. App has a greeting that's dynamic and dependent on the time of the day user uses the app.
 
 1)The app has a splash screen suitable for the app. It is currently a static launch screen for android 12 & above.
 
