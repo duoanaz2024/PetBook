@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MyApplication" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <style name="SplashTheme" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+        <item name="windowSplashScreenBackground">#ECF1EF</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="postSplashScreenTheme">@style/Theme.MyApplication</item>
+    </style>
+</resources>
