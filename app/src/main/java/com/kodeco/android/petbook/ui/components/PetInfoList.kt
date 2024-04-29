@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import com.kodeco.android.petbook.R
 import com.kodeco.android.petbook.model.Pet
 import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
@@ -72,7 +73,7 @@ fun PetInfoList(
             text = greeting,
             style = TextStyle(
                 fontSize = 25.sp,
-                color = Color.Black,
+                color = MaterialTheme.colorScheme.onSurface,
                 fontFamily = FontFamily.Cursive,
                 fontWeight = FontWeight.Bold
             ),
@@ -138,7 +139,7 @@ fun PetInfoList(
                 text = "Daily Feed",
                 style = TextStyle(
                     fontSize = 25.sp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.onSurface,
                     fontFamily = FontFamily.Cursive,
                     fontWeight = FontWeight.Bold
                 ),

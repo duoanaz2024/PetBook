@@ -32,8 +32,7 @@ fun PetInfoScreen(
 ) {
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        modifier = Modifier.fillMaxSize()
     ) {
 
         val petState = viewModel.uiState.collectAsState()

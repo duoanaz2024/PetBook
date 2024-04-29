@@ -8,6 +8,7 @@ import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.core.updateTransition
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,6 +19,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -63,12 +65,14 @@ fun PetDetails(pet: Pet){
 
     val scrollState = rememberScrollState()
 
+    val darkTheme: Boolean = isSystemInDarkTheme()
+
     Column(modifier = Modifier
         .fillMaxSize()
         .verticalScroll(scrollState)) {
         Spacer(modifier = Modifier.height(75.dp))
 
-        if (pet.wikipediaUrl.startsWith("http")){
+        if (pet.wikipediaUrl.startsWith("http") && !darkTheme){
             Button(
                 onClick = {
                     webView = !webView
@@ -91,9 +95,11 @@ fun PetDetails(pet: Pet){
             modifier = Modifier.padding(6.dp),
             color = animatedColor)
         Text(text = "Size: $dimension",
-            modifier = Modifier.padding(6.dp))
+            modifier = Modifier.padding(6.dp),
+            color = MaterialTheme.colorScheme.onSurface)
         Text(text = "Description: " + pet.description,
-            Modifier.padding(6.dp))
+            Modifier.padding(6.dp),
+            color = MaterialTheme.colorScheme.onSurface)
         SubcomposeAsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
                 .data(pet.url)
@@ -116,7 +122,8 @@ fun PetDetails(pet: Pet){
                 }
         )
         Text(text = "Life Span: " + pet.lifeSpan,
-            Modifier.padding(6.dp))
+            Modifier.padding(6.dp),
+            color = MaterialTheme.colorScheme.onSurface)
         PetRating("Child Friendly", pet.childFriendly)
         PetRating("Energy Level", pet.energyLevel)
         PetRating("Intelligence", pet.intelligence)

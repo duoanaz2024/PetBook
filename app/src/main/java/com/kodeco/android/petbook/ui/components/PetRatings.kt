@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -22,7 +23,8 @@ fun PetRating(
 ){
     Column{
         Text(text = "$measurement: ",
-            Modifier.padding(6.dp))
+            Modifier.padding(6.dp),
+            color = MaterialTheme.colorScheme.onSurface)
         Row{
             for (i in 1..rating) {
                 Icon(

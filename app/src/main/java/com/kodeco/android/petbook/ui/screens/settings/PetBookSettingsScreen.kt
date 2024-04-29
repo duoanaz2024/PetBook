@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Switch
@@ -54,12 +55,11 @@ fun PetBookSettingsScreen(
     // var cacheEnabled = viewModel.getLocalStorageEnabled().collectAsState(initial = false).value
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        modifier = Modifier.fillMaxSize()
     ) {
         Scaffold(
-            containerColor = Color.White,
-            contentColor = Color.Black,
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
 
             topBar = {
                 TopAppBar(
@@ -67,15 +67,15 @@ fun PetBookSettingsScreen(
                         Text(text = "Settings",
                             style = TextStyle(
                                 fontSize = 20.sp,
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontFamily = FontFamily.Cursive,
                                 fontWeight = FontWeight.Bold))
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White,
-                        titleContentColor = Color.Black,
-                        navigationIconContentColor = Color.Black,
-                        actionIconContentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        titleContentColor = MaterialTheme.colorScheme.onSurface,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurface
                     ),
                     navigationIcon = {
                         IconButton(onClick = {
@@ -104,7 +104,7 @@ fun PetBookSettingsScreen(
                                 text = "Enable Favorites Feature",
                                 style = TextStyle(
                                     fontSize = 20.sp,
-                                    color = Color.Black,
+                                    color = MaterialTheme.colorScheme.onSurface,
                                     fontFamily = FontFamily.Cursive,
                                     fontWeight = FontWeight.Bold)
                             )

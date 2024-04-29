@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,12 +33,11 @@ import com.kodeco.android.petbook.ui.theme.MyApplicationTheme
 fun PetBookAboutScreen(onClick: () -> Unit) {
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = Color.White
+        modifier = Modifier.fillMaxSize()
     ) {
         Scaffold(
-            containerColor = Color.White,
-            contentColor = Color.Black,
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface,
 
             topBar = {
                 TopAppBar(
@@ -45,15 +45,15 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
                         Text(text = "About",
                             style = TextStyle(
                                 fontSize = 20.sp,
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontFamily = FontFamily.Cursive,
                                 fontWeight = FontWeight.Bold))
                     },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = Color.White,
-                        titleContentColor = Color.Black,
-                        navigationIconContentColor = Color.Black,
-                        actionIconContentColor = Color.Black
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        titleContentColor = MaterialTheme.colorScheme.onSurface,
+                        navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
+                        actionIconContentColor = MaterialTheme.colorScheme.onSurface
                     ),
                     navigationIcon = {
                         IconButton(onClick = {
@@ -79,7 +79,7 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
                             text = "PetBook",
                             style = TextStyle(
                                 fontSize = 20.sp,
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontFamily = FontFamily.Cursive,
                                 fontWeight = FontWeight.Bold)
                         )
@@ -90,7 +90,7 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
                                     " this app supports feed for Cats",
                             style = TextStyle(
                                     fontSize = 20.sp,
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onSurface,
                             fontFamily = FontFamily.Cursive,
                             fontWeight = FontWeight.Bold
                         ),
@@ -100,7 +100,7 @@ fun PetBookAboutScreen(onClick: () -> Unit) {
                             text = "Version:${com.kodeco.android.petbook.BuildConfig.VERSION_NAME}",
                             style = TextStyle(
                                 fontSize = 20.sp,
-                                color = Color.Black,
+                                color = MaterialTheme.colorScheme.onSurface,
                                 fontFamily = FontFamily.Cursive,
                                 fontWeight = FontWeight.Bold)
                         )
